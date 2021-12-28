@@ -34,9 +34,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text(StringManager.articleTitle)),
-      body: Container(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(title: const Text(StringManager.articleTitle)),
+        body: Container(),
+      ),
     );
   }
 }
