@@ -31,7 +31,7 @@ class APIArticle extends Equatable {
 
 @JsonSerializable()
 class APIHits extends Equatable {
-  @JsonKey(name: 'hits')
+  @JsonKey(name: 'article')
   final List<APIArticle> articles;
 
   const APIHits({required this.articles});
