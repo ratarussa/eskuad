@@ -83,9 +83,23 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   Widget _buildError(ArticleState state) {
     return Center(
-      child: Text(
-        state.failure.message,
-        textAlign: TextAlign.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            state.failure.message,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20.0),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              child: const Text(StringManager.articleBtnRetry),
+              onPressed: () =>
+                  context.read<ArticleBloc>().add(RefreshArticles()),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -117,12 +131,16 @@ class _ArticleScreenState extends State<ArticleScreen> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
-                  article.createAt.toCustomString(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12.0,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    article.createAt.toCustomString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 12.0,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -130,15 +148,16 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   article.storyTitle,
                   style: const TextStyle(
                     fontWeight: FontWeight.w900,
-                    fontSize: 16.0,
+                    fontSize: 20.0,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 6.0),
                 Text(
                   '${StringManager.articleAuthorPrefix} ${article.author}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w300,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   ),
                 ),
               ],

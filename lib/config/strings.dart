@@ -9,4 +9,5 @@ class StringManager {
   // Article Screen
   static const String articleTitle = 'Artículos';
   static const String articleAuthorPrefix = 'De:';
+  static const String articleBtnRetry = 'Reintentar';
 }
