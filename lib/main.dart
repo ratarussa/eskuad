@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => ArticleBloc(
               articleRepository: context.read<ArticleRepository>(),
-            ),
+            )..add(AppStarted()),
           ),
         ],
         child: MaterialApp(
