@@ -14,6 +14,9 @@ class ArticleRepository extends BaseArticleRepository {
     if (!response.isSuccessful || response.body == null) throw Exception();
     final articles = response.body!.articles;
     articles.sort((a, b) => b.createAt.compareTo(a.createAt));
-    return articles.map((article) => Article.fromAPI(article)).toList();
+    return articles
+        .where((article) => article.storyTitle != null)
+        .map((article) => Article.fromAPI(article))
+        .toList();
   }
 }
