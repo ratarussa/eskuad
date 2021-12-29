@@ -9,10 +9,8 @@ class ArticleRepository extends BaseArticleRepository {
       : _apiService = apiService ?? ApiService.create();
 
   @override
-  Future<List<Article>> getArticles() async {
-    // Falta agregar logicas de paginado
-
-    final response = await _apiService.queryHits();
+  Future<List<Article>> getArticles({required int page}) async {
+    final response = await _apiService.queryHits(page);
     if (!response.isSuccessful || response.body == null) throw Exception();
     final articles = response.body!.articles;
     return articles.map((article) => Article.fromAPI(article)).toList();

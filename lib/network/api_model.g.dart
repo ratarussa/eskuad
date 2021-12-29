@@ -7,13 +7,15 @@ part of 'api_model.dart';
 // **************************************************************************
 
 APIArticle _$APIArticleFromJson(Map<String, dynamic> json) => APIArticle(
+      storyId: json['story_id'] as int?,
       createAt: json['created_at'] as String,
       author: json['author'] as String,
-      storyTitle: json['story_title'] as String,
+      storyTitle: json['story_title'] as String?,
     );
 
 Map<String, dynamic> _$APIArticleToJson(APIArticle instance) =>
     <String, dynamic>{
+      'story_id': instance.storyId,
       'created_at': instance.createAt,
       'author': instance.author,
       'story_title': instance.storyTitle,

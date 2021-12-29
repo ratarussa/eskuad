@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:eskuad/models/models.dart';
+import 'package:eskuad/network/api_service.dart';
 import 'package:eskuad/repositories/repositories.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'article_event.dart';
@@ -19,7 +19,10 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     if (event is AppStarted) {
       yield* _mapAppStatedToState();
     } else if (event is RefreshArticles) {
-    } else if (event is LoadMoreArticles) {}
+      yield* _mapRefreshArticlesToState();
+    } else if (event is LoadMoreArticles) {
+      yield* _mapLoadMoreArticlesToState();
+    }
   }
 
   Stream<ArticleState> _mapAppStatedToState() async* {
@@ -27,10 +30,22 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     yield* _getArticles();
   }
 
-  Stream<ArticleState> _getArticles() async* {
+  Stream<ArticleState> _mapRefreshArticlesToState() async* {
+    yield* _getArticles();
+  }
+
+  Stream<ArticleState> _mapLoadMoreArticlesToState() async* {
+    final nextPage = state.articles.length ~/ apiPerPage;
+    yield* _getArticles(page: nextPage);
+  }
+
+  Stream<ArticleState> _getArticles({int page = 0}) async* {
     try {
-      final articles = await _articleRepository.getArticles();
-      debugPrint(articles.toString());
+      final articles = [
+        if (page != 0) ...state.articles,
+        ...await _articleRepository.getArticles(page: page),
+      ];
+      yield state.copyWith(articles: articles, status: ArticleStatus.loaded);
     } catch (err) {
       yield state.copyWith(
         failure: Failure(message: err.toString()),

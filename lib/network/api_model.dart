@@ -5,21 +5,24 @@ part 'api_model.g.dart';
 
 @JsonSerializable()
 class APIArticle extends Equatable {
+  @JsonKey(name: 'story_id')
+  final int? storyId;
   @JsonKey(name: 'created_at')
   final String createAt;
   @JsonKey(name: 'author')
   final String author;
   @JsonKey(name: 'story_title')
-  final String storyTitle;
+  final String? storyTitle;
 
   const APIArticle({
+    required this.storyId,
     required this.createAt,
     required this.author,
     required this.storyTitle,
   });
 
   @override
-  List<Object?> get props => [createAt, author, storyTitle];
+  List<Object?> get props => [storyId, createAt, author, storyTitle];
 
   static const fromJsonFactory = _$APIArticleFromJson;
 

@@ -17,9 +17,10 @@ class _$ApiService extends ApiService {
   final definitionType = ApiService;
 
   @override
-  Future<Response<APIHits>> queryHits() {
+  Future<Response<APIHits>> queryHits(int page) {
     final $url = '';
-    final $request = Request('GET', $url, client.baseUrl);
+    final $params = <String, dynamic>{'page': page};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<APIHits, APIHits>($request);
   }
 }
