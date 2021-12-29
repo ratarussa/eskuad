@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:eskuad/config/custom_router.dart';
 import 'package:eskuad/config/strings.dart';
 import 'package:eskuad/repositories/repositories.dart';
+import 'package:eskuad/screens/article/bloc/article_bloc.dart';
 import 'package:eskuad/screens/screens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,17 +34,26 @@ class MyApp extends StatelessWidget {
           create: (_) => ArticleRepository(),
         ),
       ],
-      child: MaterialApp(
-        title: StringManager.mainTitle,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.blue,
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            secondary: Colors.black87,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ArticleBloc(
+              articleRepository: context.read<ArticleRepository>(),
+            ),
           ),
+        ],
+        child: MaterialApp(
+          title: StringManager.mainTitle,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.blue,
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              secondary: Colors.black87,
+            ),
+          ),
+          onGenerateRoute: CustomRouter.onGenerateRoute,
+          initialRoute: ArticleScreen.routeName,
         ),
-        onGenerateRoute: CustomRouter.onGenerateRoute,
-        initialRoute: ArticleScreen.routeName,
       ),
     );
   }

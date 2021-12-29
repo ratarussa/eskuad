@@ -20,11 +20,11 @@ Map<String, dynamic> _$APIArticleToJson(APIArticle instance) =>
     };
 
 APIHits _$APIHitsFromJson(Map<String, dynamic> json) => APIHits(
-      articles: (json['article'] as List<dynamic>)
+      articles: (json['hits'] as List<dynamic>)
           .map((e) => APIArticle.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$APIHitsToJson(APIHits instance) => <String, dynamic>{
-      'article': instance.articles,
+      'hits': instance.articles,
     };

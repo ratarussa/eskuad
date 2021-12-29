@@ -1,5 +1,8 @@
 import 'package:eskuad/config/strings.dart';
+import 'package:eskuad/repositories/repositories.dart';
+import 'package:eskuad/screens/article/bloc/article_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ArticleScreen extends StatefulWidget {
   static const String routeName = '/article';
@@ -7,7 +10,12 @@ class ArticleScreen extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => const ArticleScreen(),
+      builder: (context) => BlocProvider<ArticleBloc>(
+        create: (_) => ArticleBloc(
+          articleRepository: context.read<ArticleRepository>(),
+        )..add(AppStarted()),
+        child: const ArticleScreen(),
+      ),
     );
   }
 
@@ -38,7 +46,18 @@ class _ArticleScreenState extends State<ArticleScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(title: const Text(StringManager.articleTitle)),
-        body: Container(),
+        body: BlocBuilder<ArticleBloc, ArticleState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case ArticleStatus.error:
+                return const Center();
+              case ArticleStatus.loaded:
+                return const Center();
+              default:
+                return const Center();
+            }
+          },
+        ),
       ),
     );
   }
