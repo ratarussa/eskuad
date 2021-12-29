@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:eskuad/network/api_model.dart';
+import 'package:uuid/uuid.dart';
 
 class Article extends Equatable {
-  final int? storyId;
-  final String createAt;
+  final String storyId;
+  final DateTime createAt;
   final String author;
-  final String? storyTitle;
+  final String storyTitle;
 
   const Article({
     required this.storyId,
@@ -19,10 +20,10 @@ class Article extends Equatable {
 
   factory Article.fromAPI(APIArticle apiArticle) {
     return Article(
-      storyId: apiArticle.storyId,
-      createAt: apiArticle.createAt,
+      storyId: apiArticle.storyId?.toString() ?? const Uuid().v4(),
+      createAt: DateTime.parse(apiArticle.createAt),
       author: apiArticle.author,
-      storyTitle: apiArticle.storyTitle,
+      storyTitle: apiArticle.storyTitle ?? '',
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:eskuad/config/strings.dart';
+import 'package:eskuad/extensions/datetime_extension.dart';
 import 'package:eskuad/models/article/article_model.dart';
 import 'package:eskuad/repositories/repositories.dart';
 import 'package:eskuad/screens/article/bloc/article_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
 
 class ArticleScreen extends StatefulWidget {
   static const String routeName = '/article';
@@ -109,21 +109,40 @@ class _ArticleScreenState extends State<ArticleScreen> {
       itemBuilder: (context, index) {
         final article = articles[index];
         return Card(
-          key: Key(article.storyId?.toString() ?? const Uuid().v4()),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(
+          key: Key(article.storyId),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
               vertical: 10.0,
               horizontal: 22.0,
             ),
-            title: Text(
-              article.storyTitle ?? '',
-              style: const TextStyle(fontWeight: FontWeight.w900),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  article.createAt.toCustomString(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.0,
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                Text(
+                  article.storyTitle,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16.0,
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                  '${StringManager.articleAuthorPrefix} ${article.author}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ],
             ),
-            subtitle: Text(
-              '${StringManager.articleAuthorPrefix} ${article.author}',
-              style: const TextStyle(fontWeight: FontWeight.w300),
-            ),
-            onTap: () {},
           ),
         );
       },
