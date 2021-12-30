@@ -30,7 +30,11 @@ class ArticleDao extends DatabaseAccessor<ArticleDatabase>
 
   ArticleDao(this.db) : super(db);
 
-  Future<List<MoorArticleData>> findAllArticles() => select(moorArticle).get();
+  Future<List<MoorArticleData>> findAllArticles() => (select(moorArticle)
+        ..orderBy([
+          (article) => OrderingTerm.desc(article.createAt),
+        ]))
+      .get();
 
   Future insertArticle(Insertable<MoorArticleData> article) =>
       into(moorArticle).insert(article);
@@ -50,7 +54,7 @@ Insertable<MoorArticleData> articleToInsertableMoorArticle(Article article) {
 Article moorArticleToArticle(MoorArticleData article) {
   return Article(
     storyId: article.storyId,
-    createAt: article.createAt,
+    createAt: article.createAt.toUtc(),
     author: article.author,
     storyTitle: article.storyTitle,
   );

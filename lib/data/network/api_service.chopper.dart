@@ -18,7 +18,7 @@ class _$ApiService extends ApiService {
 
   @override
   Future<Response<APIHits>> queryHits(int page) {
-    final $url = '';
+    final $url = 'search_by_date?query=mobile&hitsPerPage=20';
     final $params = <String, dynamic>{'page': page};
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<APIHits, APIHits>($request);

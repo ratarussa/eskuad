@@ -51,6 +51,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   return _buildError(state);
                 case ArticleStatus.loaded:
                   return _buildArticles(state);
+                case ArticleStatus.empty:
+                  return _buildEmpty();
                 default:
                   return _buildLoading();
               }
@@ -83,12 +85,49 @@ class _ArticleScreenState extends State<ArticleScreen> {
           Text(
             state.failure.message,
             textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 22.0,
+            ),
           ),
           const SizedBox(height: 20.0),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              child: const Text(StringManager.articleBtnRetry),
+              child: const Text(
+                StringManager.articleBtnRetry,
+                style: TextStyle(fontSize: 22.0),
+              ),
+              onPressed: () =>
+                  context.read<ArticleBloc>().add(RefreshArticles()),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmpty() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            StringManager.articleEmpty,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 22.0,
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              child: const Text(
+                StringManager.articleBtnRetry,
+                style: TextStyle(fontSize: 22.0),
+              ),
               onPressed: () =>
                   context.read<ArticleBloc>().add(RefreshArticles()),
             ),

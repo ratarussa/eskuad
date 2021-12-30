@@ -10,4 +10,6 @@ class StringManager {
   static const String articleTitle = 'Artículos';
   static const String articleAuthorPrefix = 'De:';
   static const String articleBtnRetry = 'Reintentar';
+  static const String articleEmpty =
+      'No existen artículos disponibles. Intente nuevamente';
 }

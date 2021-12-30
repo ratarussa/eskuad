@@ -4,13 +4,12 @@ import 'package:eskuad/data/network/model_converter.dart';
 
 part 'api_service.chopper.dart';
 
-const String apiUrl =
-    'https://hn.algolia.com/api/v1/search_by_date?query=mobile';
 const int apiPerPage = 20;
+const String apiUrl = 'https://hn.algolia.com/api/v1/';
 
 @ChopperApi()
 abstract class ApiService extends ChopperService {
-  @Get()
+  @Get(path: 'search_by_date?query=mobile&hitsPerPage=$apiPerPage')
   Future<Response<APIHits>> queryHits(@Query('page') int page);
 
   static ApiService create() {
