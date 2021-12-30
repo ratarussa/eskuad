@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:eskuad/network/api_model.dart';
+import 'package:eskuad/data/network/api_model.dart';
 import 'package:uuid/uuid.dart';
 
 class Article extends Equatable {
@@ -16,7 +16,7 @@ class Article extends Equatable {
   });
 
   @override
-  List<Object?> get props => [createAt, author, storyTitle];
+  List<Object?> get props => [storyId, createAt, author, storyTitle];
 
   factory Article.fromAPI(APIArticle apiArticle) {
     return Article(

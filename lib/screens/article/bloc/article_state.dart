@@ -1,6 +1,6 @@
 part of 'article_bloc.dart';
 
-enum ArticleStatus { initial, loading, loaded, error }
+enum ArticleStatus { initial, loading, loaded, empty, error }
 
 class ArticleState extends Equatable {
   final List<Article> articles;

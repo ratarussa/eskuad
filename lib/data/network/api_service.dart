@@ -1,6 +1,6 @@
 import 'package:chopper/chopper.dart';
-import 'package:eskuad/network/api_model.dart';
-import 'package:eskuad/network/model_converter.dart';
+import 'package:eskuad/data/network/api_model.dart';
+import 'package:eskuad/data/network/model_converter.dart';
 
 part 'api_service.chopper.dart';
 
