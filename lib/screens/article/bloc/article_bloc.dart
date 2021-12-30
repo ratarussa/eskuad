@@ -76,4 +76,10 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       );
     }
   }
+
+  @override
+  Future<void> close() {
+    _articleRepository.close();
+    return super.close();
+  }
 }

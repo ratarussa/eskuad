@@ -5,14 +5,17 @@ import 'package:eskuad/repositories/repositories.dart';
 
 class ArticleRepository extends BaseArticleRepository {
   final ApiService _apiService;
-  final ArticleDao _articleDao;
+  final ArticleDatabase _articleDatabase;
+  late final ArticleDao _articleDao;
 
-  ArticleRepository(
-      {ApiService? apiService,
-      ArticleDatabase? articleDatabase,
-      ArticleDao? articleDao})
-      : _apiService = apiService ?? ApiService.create(),
-        _articleDao = articleDao ?? ArticleDatabase().articleDao;
+  ArticleRepository({
+    ApiService? apiService,
+    ArticleDatabase? articleDatabase,
+    ArticleDao? articleDao,
+  })  : _apiService = apiService ?? ApiService.create(),
+        _articleDatabase = articleDatabase ?? ArticleDatabase() {
+    _articleDao = articleDao ?? _articleDatabase.articleDao;
+  }
 
   @override
   Future<List<Article>> getArticles({required int page}) async {
@@ -41,5 +44,11 @@ class ArticleRepository extends BaseArticleRepository {
         return articles;
       },
     );
+  }
+
+  @override
+  void close() {
+    _apiService.client.dispose();
+    _articleDatabase.close();
   }
 }

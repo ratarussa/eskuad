@@ -6,4 +6,6 @@ abstract class BaseArticleRepository {
   Future insertCachedArticles({required List<Article> articles});
 
   Future<List<Article>> findAllCachedArticles();
+
+  void close();
 }
