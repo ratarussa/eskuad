@@ -13,7 +13,7 @@ class ArticleRepository extends BaseArticleRepository {
     ArticleDatabase? articleDatabase,
     ArticleDao? articleDao,
   })  : _apiService = apiService ?? ApiService.create(),
-        _articleDatabase = articleDatabase ?? ArticleDatabase() {
+        _articleDatabase = articleDatabase ?? ArticleDatabase(openConnection()) {
     _articleDao = articleDao ?? _articleDatabase.articleDao;
   }
 

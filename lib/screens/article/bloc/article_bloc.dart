@@ -10,9 +10,9 @@ part 'article_event.dart';
 part 'article_state.dart';
 
 class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
-  final ArticleRepository _articleRepository;
+  final BaseArticleRepository _articleRepository;
 
-  ArticleBloc({required ArticleRepository articleRepository})
+  ArticleBloc({required BaseArticleRepository articleRepository})
       : _articleRepository = articleRepository,
         super(ArticleState.initial());
 

@@ -17,8 +17,7 @@ class MoorArticleData extends DataClass implements Insertable<MoorArticleData> {
       required this.createAt,
       required this.author,
       required this.storyTitle});
-  factory MoorArticleData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  factory MoorArticleData.fromData(Map<String, dynamic> data,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return MoorArticleData(
@@ -53,7 +52,7 @@ class MoorArticleData extends DataClass implements Insertable<MoorArticleData> {
 
   factory MoorArticleData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return MoorArticleData(
       storyId: serializer.fromJson<String>(json['storyId']),
       createAt: serializer.fromJson<DateTime>(json['createAt']),
@@ -63,7 +62,7 @@ class MoorArticleData extends DataClass implements Insertable<MoorArticleData> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'storyId': serializer.toJson<String>(storyId),
       'createAt': serializer.toJson<DateTime>(createAt),
@@ -189,21 +188,25 @@ class $MoorArticleTable extends MoorArticle
   final String? _alias;
   $MoorArticleTable(this._db, [this._alias]);
   final VerificationMeta _storyIdMeta = const VerificationMeta('storyId');
+  @override
   late final GeneratedColumn<String?> storyId = GeneratedColumn<String?>(
       'story_id', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _createAtMeta = const VerificationMeta('createAt');
+  @override
   late final GeneratedColumn<DateTime?> createAt = GeneratedColumn<DateTime?>(
       'create_at', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _authorMeta = const VerificationMeta('author');
+  @override
   late final GeneratedColumn<String?> author = GeneratedColumn<String?>(
       'author', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _storyTitleMeta = const VerificationMeta('storyTitle');
+  @override
   late final GeneratedColumn<String?> storyTitle = GeneratedColumn<String?>(
       'story_title', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [storyId, createAt, author, storyTitle];
   @override
@@ -248,7 +251,7 @@ class $MoorArticleTable extends MoorArticle
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
   MoorArticleData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorArticleData.fromData(data, _db,
+    return MoorArticleData.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 

@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:eskuad/models/models.dart';
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 part 'moor_db.g.dart';
 
@@ -13,17 +18,23 @@ class MoorArticle extends Table {
   TextColumn get storyTitle => text()();
 }
 
-@UseMoor(tables: [MoorArticle], daos: [ArticleDao])
+LazyDatabase openConnection() {
+  return LazyDatabase(() async {
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'articles.sqlite'));
+    return NativeDatabase(file, logStatements: true);
+  });
+}
+
+@DriftDatabase(tables: [MoorArticle], daos: [ArticleDao])
 class ArticleDatabase extends _$ArticleDatabase {
-  ArticleDatabase()
-      : super(FlutterQueryExecutor.inDatabaseFolder(
-            path: 'articles.sqlite', logStatements: true));
+  ArticleDatabase(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 1;
 }
 
-@UseDao(tables: [MoorArticle])
+@DriftAccessor(tables: [MoorArticle])
 class ArticleDao extends DatabaseAccessor<ArticleDatabase>
     with _$ArticleDaoMixin {
   final ArticleDatabase db;
