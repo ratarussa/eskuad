@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:eskuad/config/custom_router.dart';
 import 'package:eskuad/config/strings.dart';
+import 'package:eskuad/data/cache/moor/moor_db.dart';
 import 'package:eskuad/repositories/repositories.dart';
 import 'package:eskuad/screens/article/bloc/article_bloc.dart';
 import 'package:eskuad/screens/screens.dart';
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ArticleRepository>(
-          create: (_) => ArticleRepository(),
+          create: (_) => ArticleRepository(
+            articleDatabase: ArticleDatabase(openConnection()),
+          ),
         ),
       ],
       child: MultiBlocProvider(
